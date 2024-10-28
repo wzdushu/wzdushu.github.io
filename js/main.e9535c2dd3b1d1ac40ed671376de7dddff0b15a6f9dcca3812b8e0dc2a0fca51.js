@@ -1,4 +1,3 @@
-"use strict";
 (() => {
   // ns-hugo:/home/runner/work/wnote/wnote/themes/jane/assets/js/initMobileNavbar.js
   var initMobileNavbar = () => {

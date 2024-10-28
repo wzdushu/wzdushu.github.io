@@ -27,7 +27,7 @@
 &lt;h2 id="本站建站目的">本站建站目的&lt;/h2>
 &lt;p>一、技术总结。随着时间的推移，有些技术很快就忘了，建立独立站点写博客，不仅仅方便自己日后查找、驱动自己写总结，而且让自己更认真对待这件事。&lt;/p>
 &lt;p>二、分享经验和思路。毕业后就来了北京，一路走来，中间也经历了不少挫折，但是通过自我学习成长过程，很快融入了互联网的浪潮中，因此，分享些有价值的东西对行业和社会也是一种回馈。&lt;/p>
-&lt;p>三、交友。在这个快速发展的年代，我觉得以博会友也是一件有意思的事儿。&lt;/p></description></item><item><title>一周拿下CKA经验分享</title><link>/post/kubernetes-cka-2024/</link><pubDate>Mon, 19 Aug 2024 10:10:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/kubernetes-cka-2024/</guid><description>&lt;p>对于云原生&amp;amp;k8s相关证书很早就想考一个，越早考试越好，工作的原因一直推脱到今年，眼看着它价格涨了两次（说到这里有点小肉疼了）。&lt;/p>
+&lt;p>三、交友。在这个快速发展的年代，我觉得以博会友也是一件有意思的事儿。&lt;/p></description></item><item><title>一周拿下CKA经验分享</title><link>/post/kubernetes-cka-2024.zh-cn/</link><pubDate>Mon, 19 Aug 2024 10:10:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/kubernetes-cka-2024.zh-cn/</guid><description>&lt;p>对于云原生&amp;amp;k8s相关证书很早就想考一个，越早考试越好，工作的原因一直推脱到今年，眼看着它价格涨了两次（说到这里有点小肉疼了）。&lt;/p>
 &lt;p>最近终于有空腾出一周时间全身心备考了，由于自己工作生产环境一直使用的kubernetes，所以，这次我自己的计划是考前多吸收考点，多做大量考题；&lt;/p>
 &lt;p>下面总结整理一下最近一周我CKA考试的历程，希望对你有帮助。&lt;/p>
 &lt;h2 id="cka全面认识">CKA全面认识&lt;/h2>
@@ -189,7 +189,7 @@
 &lt;p>&lt;img src="https://wnote.com/images/2024/cka-2024.png" alt="CKA">&lt;/p>
 &lt;p>通过这次CKA认证考试，整体来看难度适中，我觉得实操Kubernetes还是很重要的，尤其对于DevOps工程师；&lt;/p>
 &lt;p>其实，要想高分通过，没有任何捷径可言，就是多吸收上面列举的知识点，多练习，多实操。&lt;/p>
-&lt;p>最后，我想说的是考试只是一种形式，目的是为了证明自己熟练掌握k8s的技能，最终将这些技能应用到实际工作当中。&lt;/p></description></item><item><title>开源Waf安全防护解决方案</title><link>/post/tools-safeline-waf/</link><pubDate>Sun, 16 Jun 2024 16:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/tools-safeline-waf/</guid><description>&lt;p>最近网站加了CDN后，凌晨总是莫名其妙来一堆垃圾请求，有些是扫描、有些是大模型的UserAgent、有些是黑蜘蛛。&lt;/p>
+&lt;p>最后，我想说的是考试只是一种形式，目的是为了证明自己熟练掌握k8s的技能，最终将这些技能应用到实际工作当中。&lt;/p></description></item><item><title>开源Waf安全防护解决方案</title><link>/post/tools-safeline-waf.zh-cn/</link><pubDate>Sun, 16 Jun 2024 16:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/tools-safeline-waf.zh-cn/</guid><description>&lt;p>最近网站加了CDN后，凌晨总是莫名其妙来一堆垃圾请求，有些是扫描、有些是大模型的UserAgent、有些是黑蜘蛛。&lt;/p>
 &lt;p>为了节省CDN费用，同时防止各种注入攻击，所以开始调研开源的Waf方案(自己的小破站够用就行)，如果是企业使用，还是建议使用商业版本，比如阿里云的DCDN、腾讯的EdgeOne或者海外的Cloudflare(海外业务首选)。&lt;/p>
 &lt;h2 id="1功能介绍">1、功能介绍&lt;/h2>
 &lt;p>雷池（SafeLine）是长亭科技开源一个Waf解决方案，核心检测能力由智能语义分析算法驱动。&lt;/p>
@@ -389,7 +389,7 @@
 &lt;p>最后，放一张效果图.&lt;/p>
 &lt;p>&lt;img src="https://wnote.com/images/2024/safeline1008.png" alt="雷池后台首页">&lt;/p>
 &lt;p>参考：
-&lt;a href="https://docs.waf-ce.chaitin.cn/zh/home">https://docs.waf-ce.chaitin.cn/zh/home&lt;/a>&lt;/p></description></item><item><title>利用ollama和open-webui玩转开源大模型</title><link>/post/ai-ollama-open-webui/</link><pubDate>Tue, 30 Apr 2024 18:10:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/ai-ollama-open-webui/</guid><description>&lt;p>对于大模型的使用也1年多了，从最开始的chatgbt3.5/4到现在的国产大模型，开源大模型也越来越强，比如Llama,SD等,今天介绍两个使用了很久的工具ollama和open-webui。&lt;/p>
+&lt;a href="https://docs.waf-ce.chaitin.cn/zh/home">https://docs.waf-ce.chaitin.cn/zh/home&lt;/a>&lt;/p></description></item><item><title>利用ollama和open-webui玩转开源大模型</title><link>/post/ai-ollama-open-webui.zh-cn/</link><pubDate>Tue, 30 Apr 2024 18:10:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/ai-ollama-open-webui.zh-cn/</guid><description>&lt;p>对于大模型的使用也1年多了，从最开始的chatgbt3.5/4到现在的国产大模型，开源大模型也越来越强，比如Llama,SD等,今天介绍两个使用了很久的工具ollama和open-webui。&lt;/p>
 &lt;h2 id="ollama">Ollama&lt;/h2>
 &lt;p>Ollama是一个开源的深度学习框架，专为本地机器上便捷部署和运行大型语言模型（LLM）而设计，它提供了一套完整的深度学习工具链，
 包括数据预处理、模型构建、训练、评估和部署等功能。&lt;/p>
@@ -875,7 +875,7 @@
 &lt;p>访问https://xxx.xxx.xxx.xxx:8080/ 注册管理账户即可使用.&lt;/p>
 &lt;p>&lt;img src="https://wnote.com/images/2024/model001.png" alt="model001.png">&lt;/p>
 &lt;h2 id="总结">总结&lt;/h2>
-&lt;p>Ollama和Open WebUI的结合带来了许多优势。首先，通过直观的UI界面，非专业读者也可以轻松地进行深度学习平台的搭建和模型的训练。其次，Open WebUI为Ollama提供了丰富的功能，如数据可视化、模型性能监控等，使得用户可以更加方便地了解模型的训练情况和性能表现。最后，Ollama和Open WebUI的开源性质使得用户可以根据自己的需求进行定制和扩展。&lt;/p></description></item><item><title>Python脚本生成一个sitemap网站地图</title><link>/post/python-generate-sitemap/</link><pubDate>Sun, 10 Mar 2024 10:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/python-generate-sitemap/</guid><description>&lt;p>最近在帮朋友研究一个CMS站群，发现CMS没有sitemap功能，服务器上已经安装了python3，所以只能临时用脚本生成一个，这里记录一下。&lt;/p>
+&lt;p>Ollama和Open WebUI的结合带来了许多优势。首先，通过直观的UI界面，非专业读者也可以轻松地进行深度学习平台的搭建和模型的训练。其次，Open WebUI为Ollama提供了丰富的功能，如数据可视化、模型性能监控等，使得用户可以更加方便地了解模型的训练情况和性能表现。最后，Ollama和Open WebUI的开源性质使得用户可以根据自己的需求进行定制和扩展。&lt;/p></description></item><item><title>Python脚本生成一个sitemap网站地图</title><link>/post/python-generate-sitemap.zh-cn/</link><pubDate>Sun, 10 Mar 2024 10:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/python-generate-sitemap.zh-cn/</guid><description>&lt;p>最近在帮朋友研究一个CMS站群，发现CMS没有sitemap功能，服务器上已经安装了python3，所以只能临时用脚本生成一个，这里记录一下。&lt;/p>
 &lt;h2 id="脚本内容">脚本内容：&lt;/h2>
 &lt;div class="highlight-container">
 &lt;button class="copy-code-btn outline">Copy&lt;/button>
@@ -1073,7 +1073,7 @@
 &lt;/div>
 &lt;/div>
 &lt;h2 id="总结">总结&lt;/h2>
-&lt;p>其实，Python脚本写起来比较便捷，如果对性能有要求的话，还是用Golang比较好一些。&lt;/p></description></item><item><title>Linux下操作百度云盘的利器</title><link>/post/tools-bypy-baiduyunpan/</link><pubDate>Mon, 04 Dec 2023 16:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/tools-bypy-baiduyunpan/</guid><description>&lt;p>最近在给公司SAAS产品在客户侧进行私有化部署，由于客户现场网络无法上网，只能通过Linux跳板机将数据传输过去，除了k8s离线部署程序、镜像外，还有几百G已经切好的视频数据，所以只能通过百度网盘传输了，试想一下能不能通过命令行同步百度云盘数据呢，谷歌一搜还真有，下面就简单介绍一下bypy的使用。&lt;/p>
+&lt;p>其实，Python脚本写起来比较便捷，如果对性能有要求的话，还是用Golang比较好一些。&lt;/p></description></item><item><title>Linux下操作百度云盘的利器</title><link>/post/tools-bypy-baiduyunpan.zh-cn/</link><pubDate>Mon, 04 Dec 2023 16:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/tools-bypy-baiduyunpan.zh-cn/</guid><description>&lt;p>最近在给公司SAAS产品在客户侧进行私有化部署，由于客户现场网络无法上网，只能通过Linux跳板机将数据传输过去，除了k8s离线部署程序、镜像外，还有几百G已经切好的视频数据，所以只能通过百度网盘传输了，试想一下能不能通过命令行同步百度云盘数据呢，谷歌一搜还真有，下面就简单介绍一下bypy的使用。&lt;/p>
 &lt;h2 id="bypy介绍">bypy介绍&lt;/h2>
 &lt;p>bypy是一个百度云/百度网盘的Python客户端，主要用于linux下操作百度云盘，提供文件列表、下载、上传、比较、向上同步、向下同步等操作，主要特点：支持Unicode/中文；失败重试；递归上传/下载；目录比较; 哈希缓存。&lt;/p>
 &lt;p>另外，由于百度PCS API权限限制，程序只能存取百度云端/apps/bypy目录下面的文件和目录。&lt;/p>
@@ -1168,7 +1168,7 @@
 &lt;/div>
 &lt;h2 id="总结">总结&lt;/h2>
 &lt;p>这次对于使用bypy算告一段落，其实在调研的过程中也有很多基于baidupcs实现的工具，不过后来这些项目都不怎么维护了，所以也希望bypy能够坚持下去。&lt;/p>
-&lt;p>参考：https://github.com/houtianze/bypy&lt;/p></description></item><item><title>推荐一个Windows包管理神器</title><link>/post/tools-scoop-windows-brew/</link><pubDate>Mon, 10 Jul 2023 16:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/tools-scoop-windows-brew/</guid><description>&lt;p>由于一直用Mac来办公，习惯了Mac下brew安装软件包的便利，最近公司电脑安装了windows系统，想着也折腾一番，如何才能像MAC下安装软件包那么丝滑呢，当然是今天推荐的主角Scoop了。&lt;/p>
+&lt;p>参考：https://github.com/houtianze/bypy&lt;/p></description></item><item><title>推荐一个Windows包管理神器</title><link>/post/tools-scoop-windows-brew.zh-cn/</link><pubDate>Mon, 10 Jul 2023 16:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/tools-scoop-windows-brew.zh-cn/</guid><description>&lt;p>由于一直用Mac来办公，习惯了Mac下brew安装软件包的便利，最近公司电脑安装了windows系统，想着也折腾一番，如何才能像MAC下安装软件包那么丝滑呢，当然是今天推荐的主角Scoop了。&lt;/p>
 &lt;p>Scoop是一个开源项目，主要通过命令来安装windows软件包，可以很好避免权限弹窗，隐藏了GUI向导式安装，可以自动查找安装依赖，自动执行安装步骤。&lt;/p>
 &lt;p>官网地址：https://scoop.sh/&lt;/p>
 &lt;p>开源项目地址：https://github.com/ScoopInstaller/Scoop&lt;/p>
@@ -1356,7 +1356,7 @@
 &lt;/div>
 &lt;/div>
 &lt;/div>
-&lt;p>参考：https://github.com/ScoopInstaller/Install&lt;/p></description></item><item><title>利用阿里云开源方案实现单GPU卡多人使用</title><link>/post/kubernetes-aliyun-gpushare-deploy/</link><pubDate>Fri, 30 Jun 2023 18:10:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/kubernetes-aliyun-gpushare-deploy/</guid><description>&lt;p>最近新上了一个AI项目，主要是给大学提供AI在线实验，项目也采购了GPU服务器，但是只有一张Nvidia Tesla T4卡，需要支持多个学生同时在线做实验呢。&lt;/p>
+&lt;p>参考：https://github.com/ScoopInstaller/Install&lt;/p></description></item><item><title>利用阿里云开源方案实现单GPU卡多人使用</title><link>/post/kubernetes-aliyun-gpushare-deploy.zh-cn/</link><pubDate>Fri, 30 Jun 2023 18:10:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/kubernetes-aliyun-gpushare-deploy.zh-cn/</guid><description>&lt;p>最近新上了一个AI项目，主要是给大学提供AI在线实验，项目也采购了GPU服务器，但是只有一张Nvidia Tesla T4卡，需要支持多个学生同时在线做实验呢。&lt;/p>
 &lt;p>在线实验系统目前运行在Kubernetes上，因此，需要考虑k8s环境下，GPU共享，之前也测试过阿里云GPU卡共享方案，这里就直接记录使用步骤即可：&lt;/p>
 &lt;blockquote>
 &lt;p>kubernetes集群版本：1.23.1&lt;/p>
@@ -1667,7 +1667,7 @@
 &lt;/div>
 &lt;p>至此，GPU卡共享已经完成，剩下就是通过tensorflow来调度我的GPU卡了。&lt;/p>
 &lt;p>参考文档：&lt;/p>
-&lt;p>&lt;a href="https://github.com/AliyunContainerService/gpushare-scheduler-extender/blob/master/docs/install.md">https://github.com/AliyunContainerService/gpushare-scheduler-extender/blob/master/docs/install.md&lt;/a>&lt;/p></description></item><item><title>Go学习笔记 - 指针详解</title><link>/post/golang-note-pointer/</link><pubDate>Mon, 22 May 2023 18:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/golang-note-pointer/</guid><description>&lt;h2 id="指针是什么">指针是什么？&lt;/h2>
+&lt;p>&lt;a href="https://github.com/AliyunContainerService/gpushare-scheduler-extender/blob/master/docs/install.md">https://github.com/AliyunContainerService/gpushare-scheduler-extender/blob/master/docs/install.md&lt;/a>&lt;/p></description></item><item><title>Go学习笔记 - 指针详解</title><link>/post/golang-note-pointer.zh-cn/</link><pubDate>Mon, 22 May 2023 18:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/golang-note-pointer.zh-cn/</guid><description>&lt;h2 id="指针是什么">指针是什么？&lt;/h2>
 &lt;p>在Go语言中，指针是一个变量，它存储了另一个变量的内存地址。因此，指针变量指向的是另一个变量的内存地址，而不是变量本身。&lt;/p>
 &lt;p>声明指针变量时，需要在变量名前加上 *，表示这是一个指针变量，例如：&lt;/p>
 &lt;div class="highlight-container">
@@ -1999,7 +1999,7 @@
 &lt;p>最后，特别注意，空数组、空切片和空 map是可以使用 len() 函数求长度，结果都为 0。但是，空指针、空接口、空通道是不能使用 len() 函数求长度，否则会引发运行时错误。&lt;/p>
 &lt;p>这是因为，在 Go 中，len()函数返回一个值的长度，这个长度是预先定义好的，通常是由编译器计算得出的。空切片、空数组和空字典等类型变量的长度为0，因为它们在内存中已经有了一块空间，所以可以使用len()函数获取它们
 的长度。&lt;/p>
-&lt;p>而对于空接口和空通道，它们是不存储数据的，所以它们的长度是没有意义的，因此在使用len()函数时会引发运行时错误。如果要判断它们是否为空，应该使用nil值进行判断。&lt;/p></description></item><item><title>kind构建轻量级kubernetes集群</title><link>/post/kubernetes-kind-build-clusters/</link><pubDate>Thu, 13 Apr 2023 18:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/kubernetes-kind-build-clusters/</guid><description>&lt;p>最近在复习Golang，写了一个web应用，本地跑通以后想在k8s集群测试一番，苦于机器配置原因，
+&lt;p>而对于空接口和空通道，它们是不存储数据的，所以它们的长度是没有意义的，因此在使用len()函数时会引发运行时错误。如果要判断它们是否为空，应该使用nil值进行判断。&lt;/p></description></item><item><title>kind构建轻量级kubernetes集群</title><link>/post/kubernetes-kind-build-clusters.zh-cn/</link><pubDate>Thu, 13 Apr 2023 18:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/kubernetes-kind-build-clusters.zh-cn/</guid><description>&lt;p>最近在复习Golang，写了一个web应用，本地跑通以后想在k8s集群测试一番，苦于机器配置原因，
 搭建一套完整的k8s集群还是有一些力不从心，记得之前有朋友说过docker里也可以跑k8s，于是这就折腾了一番。&lt;/p>
 &lt;p>今天的主角是kind,那么kind是什么呢？kind可以用来干什么呢？&lt;/p>
 &lt;h2 id="一kind介绍">一、kind介绍&lt;/h2>
@@ -2776,7 +2776,7 @@
 &lt;p>至此，使用kind来快速构建集群算是告一段落，平常就可以用它跑测试，验证功能了。&lt;/p>
 &lt;p>参考文档：
 &lt;a href="https://kind.sigs.k8s.io">https://kind.sigs.k8s.io&lt;/a>
-&lt;a href="https://github.com/kubernetes-sigs/kind">https://github.com/kubernetes-sigs/kind&lt;/a>&lt;/p></description></item><item><title>自定义Jenkins Agent集成docker和kubectl工具</title><link>/post/cicd-jenkins-agent-docker-kubectl-helm/</link><pubDate>Wed, 22 Mar 2023 18:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/cicd-jenkins-agent-docker-kubectl-helm/</guid><description>&lt;p>由于我们Jenkins构建的时候，官方提供的jenkins-agent没有我们使用的工具，比如helm，kubectl，curl，argocd等，因此，我们需要集成进来。&lt;/p>
+&lt;a href="https://github.com/kubernetes-sigs/kind">https://github.com/kubernetes-sigs/kind&lt;/a>&lt;/p></description></item><item><title>自定义Jenkins Agent集成docker和kubectl工具</title><link>/post/cicd-jenkins-agent-docker-kubectl-helm.zh-cn/</link><pubDate>Wed, 22 Mar 2023 18:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/cicd-jenkins-agent-docker-kubectl-helm.zh-cn/</guid><description>&lt;p>由于我们Jenkins构建的时候，官方提供的jenkins-agent没有我们使用的工具，比如helm，kubectl，curl，argocd等，因此，我们需要集成进来。&lt;/p>
 &lt;blockquote>
 &lt;p>注意官方镜像名称有变化：
 jenkins/agent镜像，原名称为jenkins/slave，从4.3-2 开始更名为jenkins/agent
@@ -2829,7 +2829,7 @@ jenkins/inbound-agent 镜像：原名称为 jenkins/jnlp-slave ，从 4.3-2 开�
 &lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>docker build -t harbor.test.com/tools/jnlp-docker:4.11-1-alpine-jdk11 -f Dockerfile .&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>
-&lt;/div></description></item><item><title>Jenkins Workspace和Maven仓库本地持久化存储</title><link>/post/cicd-jenkins-localstorage-workspace-maven/</link><pubDate>Wed, 22 Mar 2023 16:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/cicd-jenkins-localstorage-workspace-maven/</guid><description>&lt;h2 id="创建本地存储">创建本地存储&lt;/h2>
+&lt;/div></description></item><item><title>Jenkins Workspace和Maven仓库本地持久化存储</title><link>/post/cicd-jenkins-localstorage-workspace-maven.zh-cn/</link><pubDate>Wed, 22 Mar 2023 16:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/cicd-jenkins-localstorage-workspace-maven.zh-cn/</guid><description>&lt;h2 id="创建本地存储">创建本地存储&lt;/h2>
 &lt;p>由于是测试集群，我们这里直接使用本地volume存储即可；&lt;/p>
 &lt;p>由于这里jenkins server里运行用户为jenkins，且jenkins的uid为1000，我们需要在node1上提前将/opt/jenkins_agent/和/opt/jenkins_maven/权限授权给jenkins&lt;/p>
 &lt;div class="highlight-container">
@@ -3024,7 +3024,7 @@ jenkins/inbound-agent 镜像：原名称为 jenkins/jnlp-slave ，从 4.3-2 开�
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>persistentvolumeclaim/jenkins-maven-pvc created&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>
-&lt;/div></description></item><item><title>Go学习笔记 - Go基础知识复习</title><link>/post/golang-note-datatype-struct/</link><pubDate>Fri, 17 Mar 2023 18:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/golang-note-datatype-struct/</guid><description>&lt;h2 id="一基础知识">一、基础知识&lt;/h2>
+&lt;/div></description></item><item><title>Go学习笔记 - Go基础知识复习</title><link>/post/golang-note-datatype-struct.zh-cn/</link><pubDate>Fri, 17 Mar 2023 18:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/golang-note-datatype-struct.zh-cn/</guid><description>&lt;h2 id="一基础知识">一、基础知识&lt;/h2>
 &lt;h2 id="1基本数据类型">1、基本数据类型&lt;/h2>
 &lt;h3 id="值类型">值类型：&lt;/h3>
 &lt;div class="highlight-container">
@@ -3471,7 +3471,7 @@ jenkins/inbound-agent 镜像：原名称为 jenkins/jnlp-slave ，从 4.3-2 开�
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#60a0b0;font-style:italic">&lt;/span>}&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>
-&lt;/div></description></item><item><title>kubernetes环境下部署Jenkins</title><link>/post/cicd-jenkins-in-kubernetes/</link><pubDate>Thu, 16 Mar 2023 16:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/cicd-jenkins-in-kubernetes/</guid><description>&lt;h2 id="一安装部署jenkins">一、安装部署Jenkins&lt;/h2>
+&lt;/div></description></item><item><title>kubernetes环境下部署Jenkins</title><link>/post/cicd-jenkins-in-kubernetes.zh-cn/</link><pubDate>Thu, 16 Mar 2023 16:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/cicd-jenkins-in-kubernetes.zh-cn/</guid><description>&lt;h2 id="一安装部署jenkins">一、安装部署Jenkins&lt;/h2>
 &lt;h3 id="1手动安装">1、手动安装&lt;/h3>
 &lt;p>手动安装就很简单，提前将yaml配置准备好即可， 所有CICD资源jenkins-install.yaml内容如下：&lt;/p>
 &lt;div class="highlight-container">
@@ -3944,7 +3944,7 @@ Jenkins 集群的简单示意图：&lt;/p>
 &lt;li>扩展性好，当 Kubernetes 集群的资源严重不足而导致 Job 排队等待时，可以很容易的添加一个 Kubernetes Node 到集群中，从而实现扩展。 是不是以前我们面临的种种问题在 Kubernetes&lt;/li>
 &lt;/ul>
 &lt;p>集群环境下面是不是都没有了啊？看上去非常完美。&lt;/p>
-&lt;p>最后，基于jenkins+kubernetes实现CICD容器化部署方案，无论在工作流程还是资源成本上，都有一定有优势。&lt;/p></description></item><item><title>Delve版本过低无法适配Goland</title><link>/post/tools-goland-delve-err/</link><pubDate>Wed, 15 Mar 2023 16:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/tools-goland-delve-err/</guid><description>&lt;h2 id="问题">问题&lt;/h2>
+&lt;p>最后，基于jenkins+kubernetes实现CICD容器化部署方案，无论在工作流程还是资源成本上，都有一定有优势。&lt;/p></description></item><item><title>Delve版本过低无法适配Goland</title><link>/post/tools-goland-delve-err.zh-cn/</link><pubDate>Wed, 15 Mar 2023 16:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/tools-goland-delve-err.zh-cn/</guid><description>&lt;h2 id="问题">问题&lt;/h2>
 &lt;p>Goland下最近调试代码，总是报如下错误：&lt;/p>
 &lt;div class="highlight-container">
 &lt;button class="copy-code-btn outline">Copy&lt;/button>
@@ -4039,7 +4039,7 @@ Jenkins 集群的简单示意图：&lt;/p>
 &lt;/div>
 &lt;/div>
 &lt;/div>
-&lt;p>参考：https://github.com/go-delve/delve/tree/master/Documentation/installation&lt;/p></description></item><item><title>给博客自动续签免费SSL证书</title><link>/post/tools-ssl-renew-acme/</link><pubDate>Sat, 12 Nov 2022 16:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/tools-ssl-renew-acme/</guid><description>&lt;h2 id="背景">背景&lt;/h2>
+&lt;p>参考：https://github.com/go-delve/delve/tree/master/Documentation/installation&lt;/p></description></item><item><title>给博客自动续签免费SSL证书</title><link>/post/tools-ssl-renew-acme.zh-cn/</link><pubDate>Sat, 12 Nov 2022 16:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/tools-ssl-renew-acme.zh-cn/</guid><description>&lt;h2 id="背景">背景&lt;/h2>
 &lt;p>如果你拥有一个网站或者独立博客，你每年都需要关心自己网站SSL证书过期问题，最近wnote.com证书也快过期了；&lt;/p>
 &lt;p>申请SSL证书，既让网站支持https访问，市面上有免费的也有收费的；&lt;/p>
 &lt;p>对于免费证书，国内主流云厂商比如阿里、腾讯、ucloud等平台都有免费SSL证书渠道，一般有效期为1年，需要手动申请，当然如果你的用户主要是海外，可以考虑cloudflare家CDN安全防护，默认提供了免费SSL证书。&lt;/p>
@@ -4454,7 +4454,7 @@ Jenkins 集群的简单示意图：&lt;/p>
 &lt;/div>
 &lt;/div>
 &lt;/div>
-&lt;p>至此，使用acme.sh申请免费证书、泛域名证书告一段落。&lt;/p></description></item><item><title>推荐一个Markdown写书神器，据说是GitBook替代者</title><link>/post/tools-mdbook-write-books/</link><pubDate>Thu, 06 Oct 2022 21:38:52 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/tools-mdbook-write-books/</guid><description>&lt;h2 id="mdbook简介">mdBook简介&lt;/h2>
+&lt;p>至此，使用acme.sh申请免费证书、泛域名证书告一段落。&lt;/p></description></item><item><title>推荐一个Markdown写书神器，据说是GitBook替代者</title><link>/post/tools-mdbook-write-books.zh-cn/</link><pubDate>Thu, 06 Oct 2022 21:38:52 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/tools-mdbook-write-books.zh-cn/</guid><description>&lt;h2 id="mdbook简介">mdBook简介&lt;/h2>
 &lt;p>mdBook是一个Rust语言编写，Markdown创建书籍的命令行工具。它非常适合创建产品或API 文档、教程、课程材料或任何需要简洁、易于导航和可定制的演示文稿。功能和Gitbook类似，最大优势是速度快。&lt;/p>
 &lt;ul>
 &lt;li>轻量级，Markdown语法&lt;/li>
@@ -4874,7 +4874,7 @@ Jenkins 集群的简单示意图：&lt;/p>
 &lt;/div>
 &lt;/div>
 &lt;/div>
-&lt;p>完成以上编写工作，只需要mdbook build,然后将book目录映射到nginx目录下，并配置虚拟主机即可，是不是很简单？&lt;/p></description></item><item><title>对CDN建设一些总结与思考</title><link>/post/linux-cdn-cloud-aliyun-cloudfront/</link><pubDate>Wed, 07 Sep 2022 12:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/linux-cdn-cloud-aliyun-cloudfront/</guid><description>&lt;p>新冠病毒疫情反反复复，对于日常生活和工作造成了不小影响，对于我最近半年发生了太多事情，家中亲人病重，奶奶去世，有很多事儿要忙，所以博客也停更了半年;&lt;/p>
+&lt;p>完成以上编写工作，只需要mdbook build,然后将book目录映射到nginx目录下，并配置虚拟主机即可，是不是很简单？&lt;/p></description></item><item><title>对CDN建设一些总结与思考</title><link>/post/linux-cdn-cloud-aliyun-cloudfront.zh-cn/</link><pubDate>Wed, 07 Sep 2022 12:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/linux-cdn-cloud-aliyun-cloudfront.zh-cn/</guid><description>&lt;p>新冠病毒疫情反反复复，对于日常生活和工作造成了不小影响，对于我最近半年发生了太多事情，家中亲人病重，奶奶去世，有很多事儿要忙，所以博客也停更了半年;&lt;/p>
 &lt;p>面对经济不景气，各行各业开始了裁员，很多公司业务开始收缩，趁着最近闲暇，把以前CDN工作经历做一个简单总结。&lt;/p>
 &lt;h2 id="一大型网站架构剖析">一、大型网站架构剖析：&lt;/h2>
 &lt;p>移动互联网时代，对于一个高并发的大型网站，架构的设计都不会太简单，我简单从如下几个方面概括一下：&lt;/p>
@@ -4941,7 +4941,7 @@ Jenkins 集群的简单示意图：&lt;/p>
 &lt;/ul>
 &lt;h2 id="三总结">三、总结&lt;/h2>
 &lt;p>对于最近几年，云计算时代来临，国内CDN行业也算来了一次大洗牌，原先CDN巨头网宿、蓝汛，目前已经被阿里云、腾讯云替代；曾经的帝联业务也越来越不行，快网被世纪互联收购，白山云转型边缘云计算，其他中型云厂商如金山云、ucloud、七牛云、又拍云正在逐步瓜分这个市场。&lt;/p>
-&lt;p>写在最后，未来CDN行业发展方向该如何，这个谁也不知道，根据目前这势头，各家厂商都在大搞边缘计算，随着5G、人工智能、容器技术迭代升级，CDN不仅仅只是一门技术那么简单了，它需要不断的和其他技术整合，最终应用到我们生活中。&lt;/p></description></item><item><title>解决k8s下nginx文件上传限制和504网关超时</title><link>/post/kubernetes-nginx-ingress-504/</link><pubDate>Mon, 08 Nov 2021 17:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/kubernetes-nginx-ingress-504/</guid><description>&lt;p>最近业务使用k8s集群经常有两个问题需要解决，这里记录一下：&lt;/p>
+&lt;p>写在最后，未来CDN行业发展方向该如何，这个谁也不知道，根据目前这势头，各家厂商都在大搞边缘计算，随着5G、人工智能、容器技术迭代升级，CDN不仅仅只是一门技术那么简单了，它需要不断的和其他技术整合，最终应用到我们生活中。&lt;/p></description></item><item><title>解决k8s下nginx文件上传限制和504网关超时</title><link>/post/kubernetes-nginx-ingress-504.zh-cn/</link><pubDate>Mon, 08 Nov 2021 17:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/post/kubernetes-nginx-ingress-504.zh-cn/</guid><description>&lt;p>最近业务使用k8s集群经常有两个问题需要解决，这里记录一下：&lt;/p>
 &lt;ul>
 &lt;li>前端页面上传文件1M限制&lt;/li>
 &lt;li>前端页面发送POST请求到后端，出现504超时&lt;/li>

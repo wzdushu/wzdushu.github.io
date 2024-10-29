@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>丸子有记</title><link>/zh-cn/</link><description>Recent content on 丸子有记</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>wzdushu@gmail.com (wanzi)</managingEditor><webMaster>wzdushu@gmail.com (wanzi)</webMaster><copyright>丸子有记</copyright><lastBuildDate>Mon, 19 Aug 2024 10:10:42 +0800</lastBuildDate><atom:link href="/zh-cn/index.xml" rel="self" type="application/rss+xml"/><item><title>笔记</title><link>/zh-cn/notes/</link><pubDate>Sun, 26 Nov 2023 15:00:52 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/zh-cn/notes/</guid><description>&lt;ul>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>丸子有记</title><link>/zh-cn/</link><description>Recent content on 丸子有记</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>wzdushu@gmail.com (wanzi)</managingEditor><webMaster>wzdushu@gmail.com (wanzi)</webMaster><copyright>丸子有记</copyright><lastBuildDate>Thu, 17 Oct 2024 17:22:42 +0800</lastBuildDate><atom:link href="/zh-cn/index.xml" rel="self" type="application/rss+xml"/><item><title>笔记</title><link>/zh-cn/notes/</link><pubDate>Sun, 26 Nov 2023 15:00:52 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/zh-cn/notes/</guid><description>&lt;ul>
 &lt;li>&lt;strong>&lt;a href="https://wnote.com/notes/golang/">Go语言学习手册&lt;/a>&lt;/strong> Golang新手学习手册, 涵盖Go常用数据类型、基本语法、函数、封装、继承、多态、并发编程、错误处理等等。&lt;/li>
 &lt;li>&lt;strong>&lt;a href="https://wnote.com/notes/devops/">DevOps&lt;/a>&lt;/strong> 面向运维开发、运维，涵盖Git、Jenkins、Gitlab、Github、Gerrit、Argo、ArgoCD、Kubernetes Operator、ChatBot等&lt;/li>
 &lt;li>&lt;strong>&lt;a href="https://wnote.com/notes/kubernetes/">Kubernetes&lt;/a>&lt;/strong> 面向容器运维，主要讲解k8s部署、k8s基础、k8s常用控制器和资源清单、配置管理、RBAC、监控告警、Istio、Containerd等&lt;/li>
@@ -27,7 +27,215 @@
 &lt;h2 id="本站建站目的">本站建站目的&lt;/h2>
 &lt;p>一、技术总结。随着时间的推移，有些技术很快就忘了，建立独立站点写博客，不仅仅方便自己日后查找、驱动自己写总结，而且让自己更认真对待这件事。&lt;/p>
 &lt;p>二、分享经验和思路。毕业后就来了北京，一路走来，中间也经历了不少挫折，但是通过自我学习成长过程，很快融入了互联网的浪潮中，因此，分享些有价值的东西对行业和社会也是一种回馈。&lt;/p>
-&lt;p>三、交友。在这个快速发展的年代，我觉得以博会友也是一件有意思的事儿。&lt;/p></description></item><item><title>一周拿下CKA经验分享</title><link>/zh-cn/post/kubernetes-cka-2024/</link><pubDate>Mon, 19 Aug 2024 10:10:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/zh-cn/post/kubernetes-cka-2024/</guid><description>&lt;p>对于云原生&amp;amp;k8s相关证书很早就想考一个，越早考试越好，工作的原因一直推脱到今年，眼看着它价格涨了两次（说到这里有点小肉疼了）。&lt;/p>
+&lt;p>三、交友。在这个快速发展的年代，我觉得以博会友也是一件有意思的事儿。&lt;/p></description></item><item><title>Github Action自动化部署hugo到Github Pages</title><link>/zh-cn/post/cicd-github-action-hugo/</link><pubDate>Thu, 17 Oct 2024 17:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/zh-cn/post/cicd-github-action-hugo/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;blockquote>
+&lt;p>最近计划把博客主题升级一下，由于在倒腾Github Action，打算用它实现一下CICD。写完文章提交以后自动将hugo产出静态文件自动化部署到Github pages、Netlify、Vercel、Cloud flare Pages等
+第三方平台，今天先记录Github pages自动化部署过程，这样就省很多事儿。&lt;/p>
+&lt;/blockquote>
+&lt;p>由于网站使用的Hugo静态网站生成器，涉及到敏感配置，我这里将Hugo的源代码放到私有仓库中，然后Hugo生成的前端静态页面放到Github公有仓库中，这样我们就需要准备两个Github仓库，然后通过私
+有仓库中github action实现CICD。&lt;/p>
+&lt;p>Github Action 官方文档: &lt;a href="https://docs.github.com/zh/actions">https://docs.github.com/zh/actions&lt;/a>&lt;/p>
+&lt;p>Github Pages 官方标准: &lt;a href="https://pages.github.com/">https://pages.github.com/&lt;/a>&lt;/p>
+&lt;h2 id="github-token配置">Github Token配置&lt;/h2>
+&lt;p>由于涉及到部署，这个过程中会用到认证，而Github提供了三种token认证方式：&lt;/p>
+&lt;ul>
+&lt;li>github_token&lt;/li>
+&lt;li>deploy_key&lt;/li>
+&lt;li>personal_token&lt;/li>
+&lt;/ul>
+&lt;p>其实在每个工作流中，github每次都会自动创建一个唯一的GITHUB_TOKEN密钥用于工作流的认证，GITHUB_TOKEN将在作业完成时或最多24小时后过期，这是一种临时认证策略。&lt;/p>
+&lt;blockquote>
+&lt;p>注意: 由于我们这里涉及到跨仓库部署，所以github_token就无法使用了.&lt;/p>
+&lt;/blockquote>
+&lt;p>更多github_token可以参考：https://docs.github.com/actions/security-guides/automatic-token-authentication&lt;/p>
+&lt;p>personal_token 主要用个人账户生成token。&lt;/p>
+&lt;p>&lt;a href="https://github.com/settings/tokens">https://github.com/settings/tokens&lt;/a>&lt;/p>
+&lt;p>对于deploy_token，主要是自己生成密钥对，将公钥附加到github仓库，自己存放私钥。&lt;/p>
+&lt;p>更多deploy_token参考：https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys&lt;/p>
+&lt;p>这里我们采用deploy_token方式认证，将公钥附加到公有仓库的deploy-token上，私钥附加到私有仓库的secret。&lt;/p>
+&lt;p>创建deploy_token&lt;/p>
+&lt;div class="highlight-container">
+&lt;button class="copy-code-btn outline">Copy&lt;/button>
+&lt;div class="highlight">&lt;div style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;">&lt;tr>&lt;td style="vertical-align:top;padding:0;margin:0;border:0;">
+&lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-1">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-1">1&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-2">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-2">2&lt;/a>
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+&lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>ssh-keygen -t rsa -b &lt;span style="color:#40a070">4096&lt;/span> -C &lt;span style="color:#4070a0">&amp;#34;&lt;/span>&lt;span style="color:#007020;font-weight:bold">$(&lt;/span>git config user.email&lt;span style="color:#007020;font-weight:bold">)&lt;/span>&lt;span style="color:#4070a0">&amp;#34;&lt;/span> -f gh-pages-wzdushu -N &lt;span style="color:#4070a0">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#60a0b0;font-style:italic"># 当前目录下会生成密钥对gh-pages-wzdushu和gh-pages-wzdushu.pub&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;p>公有仓库wzdushu/wzdushu.github.io配置Deploy keys设置gh-pages-wzdushu.pub内容。&lt;/p>
+&lt;p>私有仓库创建secret,指定名称为：ACTIONS_DEPLOY_KEY
+内容为gh-pages-wzdushu&lt;/p>
+&lt;p>&lt;img src="https://wnote.com/images/2024/git-001.png" alt="github-action-deploy-key">&lt;/p>
+&lt;h2 id="github-action配置">Github Action配置&lt;/h2>
+&lt;p>私有仓库创建workflow，我这里路径为：.github/workflows/cicd.yml，编辑这个文件内容如下：&lt;/p>
+&lt;div class="highlight-container">
+&lt;button class="copy-code-btn outline">Copy&lt;/button>
+&lt;div class="highlight">&lt;div style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;">&lt;tr>&lt;td style="vertical-align:top;padding:0;margin:0;border:0;">
+&lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-1">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-1"> 1&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-2">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-2"> 2&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-3">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-3"> 3&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-4">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-4"> 4&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-5">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-5"> 5&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-6">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-6"> 6&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-7">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-7"> 7&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-8">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-8"> 8&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-9">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-9"> 9&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-10">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-10">10&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-11">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-11">11&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-12">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-12">12&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-13">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-13">13&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-14">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-14">14&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-15">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-15">15&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-16">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-16">16&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-17">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-17">17&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-18">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-18">18&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-19">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-19">19&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-20">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-20">20&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-21">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-21">21&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-22">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-22">22&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-23">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-23">23&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-24">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-24">24&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-25">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-25">25&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-26">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-26">26&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-27">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-27">27&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-28">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-28">28&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-29">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-29">29&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-30">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-30">30&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-31">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-31">31&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-32">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-32">32&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-33">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-33">33&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-34">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-34">34&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-35">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-35">35&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-36">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-36">36&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-37">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-37">37&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-38">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-38">38&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-39">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-39">39&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-40">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-40">40&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-41">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-41">41&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-42">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-42">42&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-43">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-43">43&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-44">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-44">44&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-45">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-45">45&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-46">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-46">46&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-47">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-47">47&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-48">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-48">48&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-49">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-49">49&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-50">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-50">50&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-51">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-51">51&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-52">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-52">52&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-53">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-53">53&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-54">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-54">54&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-55">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-55">55&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-56">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-56">56&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-57">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-57">57&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-58">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-58">58&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-59">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-59">59&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-60">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-60">60&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-61">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-61">61&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-62">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-62">62&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-63">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-63">63&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-64">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-64">64&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-65">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-65">65&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-66">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-66">66&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-67">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-67">67&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-68">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-68">68&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-69">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-69">69&lt;/a>
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-70">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-70">70&lt;/a>
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+&lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span style="display:flex;">&lt;span>name: Deploy Hugo site to Pages
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>on:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#60a0b0;font-style:italic"># Runs on pushes targeting the default branch&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> push:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> branches: [&lt;span style="color:#4070a0">&amp;#34;master&amp;#34;&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#60a0b0;font-style:italic"># Allows you to run this workflow manually from the Actions tab&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> workflow_dispatch:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#60a0b0;font-style:italic"># Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>permissions:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> contents: read
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> pages: write
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> id&lt;span style="color:#666">-&lt;/span>token: write
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#60a0b0;font-style:italic"># Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#60a0b0;font-style:italic"># However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>concurrency:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> group: &lt;span style="color:#4070a0">&amp;#34;pages&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cancel&lt;span style="color:#666">-&lt;/span>&lt;span style="color:#007020;font-weight:bold">in&lt;/span>&lt;span style="color:#666">-&lt;/span>progress: false
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#60a0b0;font-style:italic"># Default to bash&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>defaults:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> run:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> shell: bash
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>jobs:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#60a0b0;font-style:italic"># Build job and Deploy hugo to pages&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> build&lt;span style="color:#666">-&lt;/span>deploy:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> runs&lt;span style="color:#666">-&lt;/span>on: ubuntu&lt;span style="color:#666">-&lt;/span>latest
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> env:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> HUGO_VERSION: &lt;span style="color:#40a070">0.121&lt;/span>&lt;span style="color:#666">.&lt;/span>&lt;span style="color:#40a070">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> steps:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#666">-&lt;/span> name: Install Hugo CLI
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> run: &lt;span style="color:#666">|&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> wget &lt;span style="color:#666">-&lt;/span>O &lt;span style="color:#666">$&lt;/span>{{ runner&lt;span style="color:#666">.&lt;/span>temp }}&lt;span style="color:#666">/&lt;/span>hugo&lt;span style="color:#666">.&lt;/span>deb https:&lt;span style="color:#666">//&lt;/span>github&lt;span style="color:#666">.&lt;/span>com&lt;span style="color:#666">/&lt;/span>gohugoio&lt;span style="color:#666">/&lt;/span>hugo&lt;span style="color:#666">/&lt;/span>releases&lt;span style="color:#666">/&lt;/span>download&lt;span style="color:#666">/&lt;/span>v&lt;span style="color:#666">$&lt;/span>{HUGO_VERSION}&lt;span style="color:#666">/&lt;/span>hugo_extended_&lt;span style="color:#666">$&lt;/span>{HUGO_VERSION}_linux&lt;span style="color:#666">-&lt;/span>amd64&lt;span style="color:#666">.&lt;/span>deb \
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#666">&amp;amp;&amp;amp;&lt;/span> sudo dpkg &lt;span style="color:#666">-&lt;/span>i &lt;span style="color:#666">$&lt;/span>{{ runner&lt;span style="color:#666">.&lt;/span>temp }}&lt;span style="color:#666">/&lt;/span>hugo&lt;span style="color:#666">.&lt;/span>deb
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#666">-&lt;/span> name: Install Dart Sass
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> run: sudo snap install dart&lt;span style="color:#666">-&lt;/span>sass
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#666">-&lt;/span> name: Checkout
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> uses: actions&lt;span style="color:#666">/&lt;/span>checkout&lt;span style="">@&lt;/span>v4
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> with:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> submodules: recursive
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#666">-&lt;/span> name: Build with Hugo
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> env:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> HUGO_CACHEDIR: &lt;span style="color:#666">$&lt;/span>{{ runner&lt;span style="color:#666">.&lt;/span>temp }}&lt;span style="color:#666">/&lt;/span>hugo_cache
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> HUGO_ENVIRONMENT: production
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> run: &lt;span style="color:#666">|&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> hugo \
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#666">--&lt;/span>minify \
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#666">--&lt;/span>baseURL &lt;span style="color:#4070a0">&amp;#34;${{ steps.pages.outputs.base_url }}/&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#666">-&lt;/span> name: Upload artifact
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> uses: actions&lt;span style="color:#666">/&lt;/span>upload&lt;span style="color:#666">-&lt;/span>pages&lt;span style="color:#666">-&lt;/span>artifact&lt;span style="">@&lt;/span>v2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> with:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> path: &lt;span style="color:#666">./&lt;/span>public
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#666">-&lt;/span> name: Deploy to GitHub Pages
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> uses: peaceiris&lt;span style="color:#666">/&lt;/span>actions&lt;span style="color:#666">-&lt;/span>gh&lt;span style="color:#666">-&lt;/span>pages&lt;span style="">@&lt;/span>v4
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> with:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> deploy_key: &lt;span style="color:#666">$&lt;/span>{{ secrets&lt;span style="color:#666">.&lt;/span>ACTIONS_DEPLOY_KEY }}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> external_repository: wzdushu&lt;span style="color:#666">/&lt;/span>wzdushu&lt;span style="color:#666">.&lt;/span>github&lt;span style="color:#666">.&lt;/span>io
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> publish_dir: &lt;span style="color:#666">./&lt;/span>public
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> publish_branch: master
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cname: wnote&lt;span style="color:#666">.&lt;/span>com
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> commit_message: &lt;span style="color:#666">$&lt;/span>{{ github&lt;span style="color:#666">.&lt;/span>event&lt;span style="color:#666">.&lt;/span>head_commit&lt;span style="color:#666">.&lt;/span>message }}&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;p>on 这里有三种触发方式：&lt;/p>
+&lt;ul>
+&lt;li>push：git push 推送时执行。&lt;/li>
+&lt;li>workflow_dispatch：项目仓库的 Action 手动执行。&lt;/li>
+&lt;li>schedule：定时执行&lt;/li>
+&lt;/ul>
+&lt;p>由于这里hugo主题新版本依赖Sass，所以这里需要安装，非每个人必须。&lt;/p>
+&lt;p>这里部署没有使用官方action，采用了开源的peaceiris/actions-gh-pages，主要是这个仓库对Hugo、MkDocs、Gatsby、mdBook、Next、Nuxt等比较友好。&lt;/p>
+&lt;p>其他配置可以参考github action官方文档，不再一一说明。&lt;/p>
+&lt;h2 id="执行部署">执行部署&lt;/h2>
+&lt;p>后面，我们就开心的像往常一样，写完文章提交到Github上，通过触发GitHub Actions 执行生成静态文件推送到GitHub Pages，剩下的时间就喝一杯咖啡让等它干完活了。&lt;/p>
+&lt;p>&lt;img src="https://wnote.com/images/2024/git-002.png" alt="github-action-cicd">&lt;/p>
+&lt;p>总结：对于Github action自动化部署的功能，不仅仅局限于今天用来部署静态页面，对于实际项目和生产环境中，往往会将应用部署到k8s集群或者一些其他PAAS平台，比如阿里云ACK、AWS的EKS、Azure
+的AKS等等，当然类似Jenkins或者Gitlab CI的其他功能，Github Action也是一点不少。&lt;/p></description></item><item><title>一周拿下CKA经验分享</title><link>/zh-cn/post/kubernetes-cka-2024/</link><pubDate>Mon, 19 Aug 2024 10:10:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/zh-cn/post/kubernetes-cka-2024/</guid><description>&lt;p>对于云原生&amp;amp;k8s相关证书很早就想考一个，越早考试越好，工作的原因一直推脱到今年，眼看着它价格涨了两次（说到这里有点小肉疼了）。&lt;/p>
 &lt;p>最近终于有空腾出一周时间全身心备考了，由于自己工作生产环境一直使用的kubernetes，所以，这次我自己的计划是考前多吸收考点，多做大量考题；&lt;/p>
 &lt;p>下面总结整理一下最近一周我CKA考试的历程，希望对你有帮助。&lt;/p>
 &lt;h2 id="cka全面认识">CKA全面认识&lt;/h2>
@@ -4945,156 +5153,4 @@ Jenkins 集群的简单示意图：&lt;/p>
 &lt;/ul>
 &lt;h2 id="三总结">三、总结&lt;/h2>
 &lt;p>对于最近几年，云计算时代来临，国内CDN行业也算来了一次大洗牌，原先CDN巨头网宿、蓝汛，目前已经被阿里云、腾讯云替代；曾经的帝联业务也越来越不行，快网被世纪互联收购，白山云转型边缘云计算，其他中型云厂商如金山云、ucloud、七牛云、又拍云正在逐步瓜分这个市场。&lt;/p>
-&lt;p>写在最后，未来CDN行业发展方向该如何，这个谁也不知道，根据目前这势头，各家厂商都在大搞边缘计算，随着5G、人工智能、容器技术迭代升级，CDN不仅仅只是一门技术那么简单了，它需要不断的和其他技术整合，最终应用到我们生活中。&lt;/p></description></item><item><title>解决k8s下nginx文件上传限制和504网关超时</title><link>/zh-cn/post/kubernetes-nginx-ingress-504/</link><pubDate>Mon, 08 Nov 2021 17:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/zh-cn/post/kubernetes-nginx-ingress-504/</guid><description>&lt;p>最近业务使用k8s集群经常有两个问题需要解决，这里记录一下：&lt;/p>
-&lt;ul>
-&lt;li>前端页面上传文件1M限制&lt;/li>
-&lt;li>前端页面发送POST请求到后端，出现504超时&lt;/li>
-&lt;/ul>
-&lt;p>第一个问题主要解决方法：nginx默认上传大小为1M，nginx配置文件http,server, location区域增加如下内容：&lt;/p>
-&lt;div class="highlight-container">
-&lt;button class="copy-code-btn outline">Copy&lt;/button>
-&lt;div class="highlight">&lt;div style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-&lt;table style="border-spacing:0;padding:0;margin:0;border:0;">&lt;tr>&lt;td style="vertical-align:top;padding:0;margin:0;border:0;">
-&lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-1">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-1">1&lt;/a>
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-&lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>client_max_body_size 800M;&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>
-&lt;/div>
-&lt;p>第二个问题主要解决方法：nginx默认读取后端超时时间为1分钟，nginx配置文件http,server, location区域增加如下内容：&lt;/p>
-&lt;div class="highlight-container">
-&lt;button class="copy-code-btn outline">Copy&lt;/button>
-&lt;div class="highlight">&lt;div style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-&lt;table style="border-spacing:0;padding:0;margin:0;border:0;">&lt;tr>&lt;td style="vertical-align:top;padding:0;margin:0;border:0;">
-&lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-1">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-1">1&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-2">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-2">2&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-3">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-3">3&lt;/a>
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-&lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>proxy_connect_timeout 120;&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>proxy_read_timeout 900;&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>proxy_send_timeout 900;&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>
-&lt;/div>
-&lt;p>最终，nginx配置如下：&lt;/p>
-&lt;div class="highlight-container">
-&lt;button class="copy-code-btn outline">Copy&lt;/button>
-&lt;div class="highlight">&lt;div style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-&lt;table style="border-spacing:0;padding:0;margin:0;border:0;">&lt;tr>&lt;td style="vertical-align:top;padding:0;margin:0;border:0;">
-&lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-1">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-1"> 1&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-2">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-2"> 2&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-3">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-3"> 3&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-4">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-4"> 4&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-5">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-5"> 5&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-6">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-6"> 6&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-7">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-7"> 7&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-8">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-8"> 8&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-9">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-9"> 9&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-10">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-10">10&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-11">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-11">11&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-12">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-12">12&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-13">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-13">13&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-14">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-14">14&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-15">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-15">15&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-16">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-16">16&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-17">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-17">17&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-18">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-18">18&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-19">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-19">19&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-20">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-20">20&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-21">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-21">21&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-22">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-22">22&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-23">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-23">23&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-24">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-24">24&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-25">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-25">25&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-26">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-26">26&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-27">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-27">27&lt;/a>
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-&lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>server {&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>listen 80;&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>server_name web_server;&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>location / {&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>root /usr/share/nginx/html/;&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>index index.htm index.html;&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>try_files $uri $uri/ /index.html;&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>}&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>location /business-operation {&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>proxy_pass http://business-operat.common:5000;&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>proxy_ignore_client_abort on; &lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>keepalive_timeout 900s;&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>client_body_timeout 900s;&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>proxy_connect_timeout 120s;&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>proxy_read_timeout 900s;&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>proxy_send_timeout 900s;&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>client_max_body_size 800m;&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>proxy_pass_header Authorization;&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>proxy_pass_header WWW-Authenticate;&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>proxy_set_header Host $host;&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>proxy_set_header X-Real-IP $remote_addr;&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>proxy_set_header X-Forwarded-Proto $scheme;&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>proxy_set_header X-Forwarded-Port $server_port;&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>}&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>}&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>
-&lt;/div>
-&lt;p>最后，以上nginx配置调整以后，还需要在创建ingress的时候，注解里带上这些信息：&lt;/p>
-&lt;div class="highlight-container">
-&lt;button class="copy-code-btn outline">Copy&lt;/button>
-&lt;div class="highlight">&lt;div style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-&lt;table style="border-spacing:0;padding:0;margin:0;border:0;">&lt;tr>&lt;td style="vertical-align:top;padding:0;margin:0;border:0;">
-&lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-1">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-1"> 1&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-2">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-2"> 2&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-3">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-3"> 3&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-4">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-4"> 4&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-5">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-5"> 5&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-6">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-6"> 6&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-7">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-7"> 7&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-8">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-8"> 8&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-9">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-9"> 9&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-10">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-10">10&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-11">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-11">11&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-12">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-12">12&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-13">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-13">13&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-14">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-14">14&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-15">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-15">15&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-16">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-16">16&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-17">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-17">17&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-18">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-18">18&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-19">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-19">19&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-20">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-20">20&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-21">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-21">21&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-22">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-22">22&lt;/a>
-&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-23">&lt;a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-23">23&lt;/a>
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-&lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#062873;font-weight:bold">apiVersion&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>networking.k8s.io/v1beta1&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#062873;font-weight:bold">kind&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>Ingress&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#062873;font-weight:bold">metadata&lt;/span>:&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#062873;font-weight:bold">annotations&lt;/span>:&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#062873;font-weight:bold">nginx.ingress.kubernetes.io/proxy-body-size&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#4070a0">&amp;#34;800M&amp;#34;&lt;/span>&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#062873;font-weight:bold">nginx.ingress.kubernetes.io/proxy-connect-timeout&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#4070a0">&amp;#39;120&amp;#39;&lt;/span>&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#062873;font-weight:bold">nginx.ingress.kubernetes.io/proxy-read-timeout&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#4070a0">&amp;#39;900&amp;#39;&lt;/span>&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#062873;font-weight:bold">nginx.ingress.kubernetes.io/proxy-send-timeout&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#4070a0">&amp;#39;900&amp;#39;&lt;/span>&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#062873;font-weight:bold">name&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>enterprise-mark&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#062873;font-weight:bold">namespace&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>frontend&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#062873;font-weight:bold">spec&lt;/span>:&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#062873;font-weight:bold">rules&lt;/span>:&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- &lt;span style="color:#062873;font-weight:bold">host&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>enterprise-marketing.xxxx.com&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#062873;font-weight:bold">http&lt;/span>:&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#062873;font-weight:bold">paths&lt;/span>:&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- &lt;span style="color:#062873;font-weight:bold">backend&lt;/span>:&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#062873;font-weight:bold">serviceName&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>enterprise-mark&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#062873;font-weight:bold">servicePort&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#40a070">80&lt;/span>&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#062873;font-weight:bold">path&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>/&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#062873;font-weight:bold">status&lt;/span>:&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#062873;font-weight:bold">loadBalancer&lt;/span>:&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#062873;font-weight:bold">ingress&lt;/span>:&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- &lt;span style="color:#062873;font-weight:bold">ip&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#40a070">39.107&lt;/span>.xxx.xxx&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>
-&lt;/div></description></item></channel></rss>
+&lt;p>写在最后，未来CDN行业发展方向该如何，这个谁也不知道，根据目前这势头，各家厂商都在大搞边缘计算，随着5G、人工智能、容器技术迭代升级，CDN不仅仅只是一门技术那么简单了，它需要不断的和其他技术整合，最终应用到我们生活中。&lt;/p></description></item></channel></rss>

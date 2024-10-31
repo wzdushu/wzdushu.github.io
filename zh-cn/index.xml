@@ -27,14 +27,14 @@
 &lt;h2 id="本站建站目的">本站建站目的&lt;/h2>
 &lt;p>一、技术总结。随着时间的推移，有些技术很快就忘了，建立独立站点写博客，不仅仅方便自己日后查找、驱动自己写总结，而且让自己更认真对待这件事。&lt;/p>
 &lt;p>二、分享经验和思路。毕业后就来了北京，一路走来，中间也经历了不少挫折，但是通过自我学习成长过程，很快融入了互联网的浪潮中，因此，分享些有价值的东西对行业和社会也是一种回馈。&lt;/p>
-&lt;p>三、交友。在这个快速发展的年代，我觉得以博会友也是一件有意思的事儿。&lt;/p></description></item><item><title>Github Action自动化部署hugo到Github Pages</title><link>/zh-cn/post/cicd-github-action-hugo/</link><pubDate>Thu, 17 Oct 2024 17:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/zh-cn/post/cicd-github-action-hugo/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>三、交友。在这个快速发展的年代，我觉得以博会友也是一件有意思的事儿。&lt;/p></description></item><item><title>Github Actions自动化部署hugo到Github Pages</title><link>/zh-cn/post/cicd-github-actions-hugo/</link><pubDate>Thu, 17 Oct 2024 17:22:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/zh-cn/post/cicd-github-actions-hugo/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
 &lt;blockquote>
-&lt;p>最近计划把博客主题升级一下，由于在倒腾Github Action，打算用它实现一下CICD。写完文章提交以后自动将hugo产出静态文件自动化部署到Github pages、Netlify、Vercel、Cloud flare Pages等
+&lt;p>最近计划把博客主题升级一下，由于在倒腾Github Actions，打算用它实现一下CICD。写完文章提交以后自动将hugo产出静态文件自动化部署到Github pages、Netlify、Vercel、Cloud flare Pages等
 第三方平台，今天先记录Github pages自动化部署过程，这样就省很多事儿。&lt;/p>
 &lt;/blockquote>
 &lt;p>由于网站使用的Hugo静态网站生成器，涉及到敏感配置，我这里将Hugo的源代码放到私有仓库中，然后Hugo生成的前端静态页面放到Github公有仓库中，这样我们就需要准备两个Github仓库，然后通过私
-有仓库中github action实现CICD。&lt;/p>
-&lt;p>Github Action 官方文档: &lt;a href="https://docs.github.com/zh/actions">https://docs.github.com/zh/actions&lt;/a>&lt;/p>
+有仓库中github actions实现CICD。&lt;/p>
+&lt;p>Github Actions 官方文档: &lt;a href="https://docs.github.com/zh/actions">https://docs.github.com/zh/actions&lt;/a>&lt;/p>
 &lt;p>Github Pages 官方标准: &lt;a href="https://pages.github.com/">https://pages.github.com/&lt;/a>&lt;/p>
 &lt;h2 id="github-token配置">Github Token配置&lt;/h2>
 &lt;p>由于涉及到部署，这个过程中会用到认证，而Github提供了三种token认证方式：&lt;/p>
@@ -70,8 +70,8 @@
 &lt;p>公有仓库wzdushu/wzdushu.github.io配置Deploy keys设置gh-pages-wzdushu.pub内容。&lt;/p>
 &lt;p>私有仓库创建secret,指定名称为：ACTIONS_DEPLOY_KEY
 内容为gh-pages-wzdushu&lt;/p>
-&lt;p>&lt;img src="https://wnote.com/images/2024/git-001.png" alt="github-action-deploy-key">&lt;/p>
-&lt;h2 id="github-action配置">Github Action配置&lt;/h2>
+&lt;p>&lt;img src="https://wnote.com/images/2024/git-001.png" alt="github-actions-deploy-key">&lt;/p>
+&lt;h2 id="github-actions配置">Github Actions配置&lt;/h2>
 &lt;p>私有仓库创建workflow，我这里路径为：.github/workflows/cicd.yml，编辑这个文件内容如下：&lt;/p>
 &lt;div class="highlight-container">
 &lt;button class="copy-code-btn outline">Copy&lt;/button>
@@ -225,17 +225,17 @@
 &lt;p>on 这里有三种触发方式：&lt;/p>
 &lt;ul>
 &lt;li>push：git push 推送时执行。&lt;/li>
-&lt;li>workflow_dispatch：项目仓库的 Action 手动执行。&lt;/li>
+&lt;li>workflow_dispatch：项目仓库的 Actions 手动执行。&lt;/li>
 &lt;li>schedule：定时执行&lt;/li>
 &lt;/ul>
 &lt;p>由于这里hugo主题新版本依赖Sass，所以这里需要安装，非每个人必须。&lt;/p>
-&lt;p>这里部署没有使用官方action，采用了开源的peaceiris/actions-gh-pages，主要是这个仓库对Hugo、MkDocs、Gatsby、mdBook、Next、Nuxt等比较友好。&lt;/p>
-&lt;p>其他配置可以参考github action官方文档，不再一一说明。&lt;/p>
+&lt;p>这里部署没有使用官方actions，采用了开源的peaceiris/actions-gh-pages，主要是这个仓库对Hugo、MkDocs、Gatsby、mdBook、Next、Nuxt等比较友好。&lt;/p>
+&lt;p>其他配置可以参考github actions官方文档，不再一一说明。&lt;/p>
 &lt;h2 id="执行部署">执行部署&lt;/h2>
 &lt;p>后面，我们就开心的像往常一样，写完文章提交到Github上，通过触发GitHub Actions 执行生成静态文件推送到GitHub Pages，剩下的时间就喝一杯咖啡让等它干完活了。&lt;/p>
 &lt;p>&lt;img src="https://wnote.com/images/2024/git-002.png" alt="github-action-cicd">&lt;/p>
-&lt;p>总结：对于Github action自动化部署的功能，不仅仅局限于今天用来部署静态页面，对于实际项目和生产环境中，往往会将应用部署到k8s集群或者一些其他PAAS平台，比如阿里云ACK、AWS的EKS、Azure
-的AKS等等，当然类似Jenkins或者Gitlab CI的其他功能，Github Action也是一点不少。&lt;/p></description></item><item><title>一周拿下CKA经验分享</title><link>/zh-cn/post/kubernetes-cka-2024/</link><pubDate>Mon, 19 Aug 2024 10:10:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/zh-cn/post/kubernetes-cka-2024/</guid><description>&lt;p>对于云原生&amp;amp;k8s相关证书很早就想考一个，越早考试越好，工作的原因一直推脱到今年，眼看着它价格涨了两次（说到这里有点小肉疼了）。&lt;/p>
+&lt;p>总结：对于Github actions自动化部署的功能，不仅仅局限于今天用来部署静态页面，对于实际项目和生产环境中，往往会将应用部署到k8s集群或者一些其他PAAS平台，比如阿里云ACK、AWS的EKS、Azure
+的AKS等等，当然类似Jenkins或者Gitlab CI的其他功能，Github Actions也是一点不少。&lt;/p></description></item><item><title>一周拿下CKA经验分享</title><link>/zh-cn/post/kubernetes-cka-2024/</link><pubDate>Mon, 19 Aug 2024 10:10:42 +0800</pubDate><author>wzdushu@gmail.com (wanzi)</author><guid>/zh-cn/post/kubernetes-cka-2024/</guid><description>&lt;p>对于云原生&amp;amp;k8s相关证书很早就想考一个，越早考试越好，工作的原因一直推脱到今年，眼看着它价格涨了两次（说到这里有点小肉疼了）。&lt;/p>
 &lt;p>最近终于有空腾出一周时间全身心备考了，由于自己工作生产环境一直使用的kubernetes，所以，这次我自己的计划是考前多吸收考点，多做大量考题；&lt;/p>
 &lt;p>下面总结整理一下最近一周我CKA考试的历程，希望对你有帮助。&lt;/p>
 &lt;h2 id="cka全面认识">CKA全面认识&lt;/h2>
